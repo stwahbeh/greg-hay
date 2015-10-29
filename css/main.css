@@ -7,16 +7,36 @@
 	text-align:center;
 }
 
-#list-item {
+.list {
 	background-color: #D3D3D3;
 	margin-bottom:1em;
+	text-size:12px;
+	border-radius: 15px;
 }
 
 .raty {
 	fill:orange;
 }
 
+i{
+	display:inline-block;
 
+}
+a{
+	float:right;
+	margin-top: 20px;
+	color: orange;
+	font-size: 18px;
+}
+
+#bleh {
+	display:inline-block;
+}
+
+.fa-fw {
+	font-size: 20px;
+	color: orange;
+}
 
 @media screen and (min-width: 768px ) {
 	#heading {
