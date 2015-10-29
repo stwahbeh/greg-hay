@@ -16,10 +16,9 @@ var Review = Parse.Object.extend('Review');
 // }
 
 
-//$("form").submit(function() {
+
 var complete = function() {
 	var review = new Review();
-
 	
 	//Set a property of your new instance equal to data entered
 	$(this).find('input').each(function() {
@@ -31,11 +30,10 @@ var complete = function() {
 	//Sets property of stars
 	var rate = parseInt($("#rate").raty('score'));
 	console.log("score is " + rate);
-	review.set('rate',rate); 
-	
+	review.set('rate',rate); 	
 
 	//Save instance back to your data
-	review:save(null,{
+	review.save(null,{
 		success:getData	
 	})
 	console.log("didnt print");
@@ -57,7 +55,7 @@ var getData = function() {
 
 
 
-var buildList = function(data) {
+ var buildList = function(data) {
 	//Empty our ordered list
 	$('ol').empty()
 
@@ -66,32 +64,23 @@ var buildList = function(data) {
 	})
 };
 
+var addItem= function(item) {
+	var stars = item.get('rate.raty')
+	var title = item.get('title')
+	var review = item.get('review')
+
+	//Append statements
+
+	var div = $('<div class="container"> 
+		<p>	' + stars + title + </p>
+		<p> '+ review + '</p>'
+		'<h4> "3 out of 4 found this review helpful"</h4>'
+	</div>')
 
 
+	$('ol').Append(li)
 
-
-
-// // var addItem= function(item) {
-// // 	var stars = item.get('rate.raty')
-// // 	var title = item.get('title')
-// // 	var review = item.get('review')
-
-// // 	//Append statements
-
-// // 	var div = $('<div class="container"> 
-// // 		<p>	' + stars + title + </p>
-// // 		<p> '+ review + '</p>'
-// // 		'<h4> "3 out of 4 found this review helpful"</h4>'
-// // 	</div>')
-
-
-// // 	$('ol').Append(li)
-
-
-
-// // };
-
-
+};
 
 // //adds average rating
 
