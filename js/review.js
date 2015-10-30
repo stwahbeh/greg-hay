@@ -7,21 +7,10 @@ var Review = Parse.Object.extend('Review');
 var count = 0;
 var totalRating = 0;
 
-//Click event when form is submitted
-
-// function validateForm() {
-//     var x = document.forms["myForm"]["fname"].value;
-//     if (x == null || x == "") {
-//         alert("Name must be filled out");
-//         return false;
-//     }
-// }
-
-
 
 var complete = function() {
     var review = new Review();
-    //console.log("1");
+
     //Set a property of your new instance equal to data entered
     $('form').find('input').each(function() {
         review.set($(this).attr('id'), $(this).val());
@@ -34,6 +23,7 @@ var complete = function() {
         rate = 0;
     }
 
+    //set rate, upvotes, and downvotes
     review.set('rate', rate);
     $('#rate').raty({score:0});
 
@@ -55,10 +45,10 @@ var complete = function() {
 
 //Function to get data
 var getData = function() {
-    //console.log("2");
+    
     var query = new Parse.Query(Review);   
 
-
+    //execute query
     query.find({
         success: function(results) {
             buildList(results)
@@ -68,7 +58,8 @@ var getData = function() {
 
 
 var buildList = function(data) {  
-    $('.list').empty()
+    //empty list
+    $('#divList').empty()
     data.forEach(function(d){
         addItem(d);
     })
@@ -77,22 +68,25 @@ var buildList = function(data) {
 };
 
 var addItem = function(item) {
-   //console.log('7');
+    
+    //set data from parse query
     var stars = item.get('rate')
     var title = item.get('title')
     var review = item.get('review')
     var upvotes = item.get('upvotes')
     var downvotes = item.get('downvotes')
-    //Append statements
+    var total= upvotes + downvotes
+    
     count++;
     totalRating += stars;
 
+    //append new data
+    var div = $('<div class="container list"></div>')
     var ratyDiv = $('<span></span>')
 
-    var div = $('<div class="container list"></div>')
     div.append(ratyDiv);
 
-    var total= upvotes + downvotes
+    
     var body = $('<h3 id="bleh">'+ "  " + title + "  " +'</h3>')
     div.append(body);
     var down = $('<i class="fa fa-thumbs-down clickable"></i>')
@@ -105,6 +99,8 @@ var addItem = function(item) {
     
     var dest = $('<button class="btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span></button>')
     div.append(dest);
+
+    //$('divList').append(div)
     dest.click(function() {
         item.destroy({
             success: getData()
@@ -112,9 +108,9 @@ var addItem = function(item) {
         })
 
     })
-    down.click(function(){
-        alert("you clicked");
 
+    //save data from clicking upvotes and downvotes
+    down.click(function(){  
         item.increment('downvotes')
         item.save(null, {
         success: getData
@@ -122,28 +118,23 @@ var addItem = function(item) {
     });
 
     up.click(function(){
-        alert("you clicked up");
-
         item.increment('upvotes')
         item.save(null, {
         success: getData
     })
     });
 
+    //sets average rating
        ratyDiv.raty({
         readOnly: true,
         score: stars,
         size: 12
     });
 
-    $('#reviews').append(div)
+    $('#divList').append(div)
 
 };
 
-//I put this here but I dont know why?
-//getData()
-
-// //adds average rating
 
 $(function() {
     getData()
