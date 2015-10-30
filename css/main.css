@@ -22,12 +22,7 @@ i{
 	display:inline-block;
 
 }
-a{
-	float:right;
-	margin-top: 20px;
-	color: orange;
-	font-size: 18px;
-}
+
 
 #bleh {
 	display:inline-block;
@@ -36,6 +31,14 @@ a{
 .fa-fw {
 	font-size: 20px;
 	color: orange;
+}
+
+.clickable {
+	cursor: pointer;
+	float:right;
+	margin-top: 20px;
+	color: orange;
+	font-size: 18px;
 }
 
 @media screen and (min-width: 768px ) {

@@ -81,6 +81,8 @@ var addItem = function(item) {
     var stars = item.get('rate')
     var title = item.get('title')
     var review = item.get('review')
+    var upvotes = item.get('upvotes')
+    var downvotes = item.get('downvotes')
     //Append statements
     count++;
     totalRating += stars;
@@ -90,13 +92,19 @@ var addItem = function(item) {
     var div = $('<div class="container list"></div>')
     div.append(ratyDiv);
 
-
-    var body = $('<h3 id="bleh">'+ "  " + title + "  " +'</h3><a><i class="fa fa-thumbs-down"></i></a><a><i class="fa fa-thumbs-up"></i></a><h4>' + review + '</h4><h6> 3 out of 5 people found this helpful</h6></div>')
+    var total= upvotes + downvotes
+    var body = $('<h3 id="bleh">'+ "  " + title + "  " +'</h3>')
     div.append(body);
+    var down = $('<i class="fa fa-thumbs-down clickable"></i>')
+    div.append(down);
+    var up = $('<i class="fa fa-thumbs-up clickable"></i>')
+    div.append(up);
+    var rest = $('<h4>' + review + '</h4><h6>' + upvotes + ' out of ' + total +' people found this helpful</h6></div>')
+    div.append(rest);
+   
     
     var dest = $('<button class="btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span></button>')
     div.append(dest);
-    console.log('8');
     dest.click(function() {
         item.destroy({
             success: getData()
@@ -104,7 +112,24 @@ var addItem = function(item) {
         })
 
     })
-    
+    down.click(function(){
+        alert("you clicked");
+
+        item.increment('downvotes')
+        item.save(null, {
+        success: getData
+    })
+    });
+
+    up.click(function(){
+        alert("you clicked up");
+
+        item.increment('upvotes')
+        item.save(null, {
+        success: getData
+    })
+    });
+
        ratyDiv.raty({
         readOnly: true,
         score: stars,
@@ -121,9 +146,7 @@ var addItem = function(item) {
 // //adds average rating
 
 $(function() {
-    console.log('9')
     getData()
-    console.log('10')
     $('#rate').raty();
     $('form').submit(function() {
         complete();
