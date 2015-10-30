@@ -93,7 +93,7 @@ var addItem = function(item) {
     div.append(down);
     var up = $('<i class="fa fa-thumbs-up clickable"></i>')
     div.append(up);
-    var rest = $('<h4>' + review + '</h4><h6>' + upvotes + ' out of ' + total +' people found this helpful</h6></div>')
+    var rest = $('<h4>' + review + '</h4><h6>' + upvotes + ' out of ' + total +' people liked this memory</h6></div>')
     div.append(rest);
    
     
